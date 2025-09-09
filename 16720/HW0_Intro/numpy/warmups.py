@@ -11,7 +11,11 @@ def w1(X):
 
     Hint: Trust that numpy will do the right thing
     """
-    return None
+    x_range, y_range = X.shape
+    for i in range(x_range):
+        for j in range(y_range):
+            X[i, j] = X[i, j] * 10 + 100
+    return X
 
 
 def w2(X, Y):
@@ -25,7 +29,11 @@ def w2(X, Y):
 
     Hint: Trust that numpy will do the right thing
     """
-    return None
+    N = X.shape[0]
+    for i in range(N):
+        for j in range(N):
+            X[i, j] = X[i, j] + 10 * Y[i, j]
+    return X
 
 
 def w3(X, Y):
@@ -39,7 +47,11 @@ def w3(X, Y):
 
     Hint: By analogy to +, * will do the same thing
     """
-    return None
+    N = X.shape[0]
+    for i in range(N):
+        for j in range(N):
+            X[i, j] = X[i, j] * Y[i, j] - 10
+    return X
 
 
 def w4(X, Y):
@@ -53,6 +65,9 @@ def w4(X, Y):
 
     Hint: 
     1. Be careful! There are different variants of *, @, dot
+        * is element-wise multiplication
+        @ is matrix multiplication
+        dot is matrix multiplication
     2.  a = [[1,2],
              [1,2]]
         b = [[2,2],
@@ -60,9 +75,9 @@ def w4(X, Y):
         a * b = [[2,4],
                  [3,6]]
     Is this matrix multiplication?
-
+        No, this is element-wise multiplication.
     """
-    return None
+    return X@Y
 
 
 def w5(X):
@@ -75,7 +90,7 @@ def w5(X):
 
     Hint: Check .astype() !
     """
-    return None
+    return X.astype(np.int32)
 
 
 def w6(X, Y):
@@ -88,7 +103,11 @@ def w6(X, Y):
     A numpy array Z such that Z[i] = float(X[i]) / float(Y[i])
 
     """
-    return None
+    N = X.shape[0]
+    Z = np.zeros((N, 1))
+    for i in range(N):
+        Z[i] = float(X[i]) / float(Y[i])
+    return Z
 
 
 def w7(X):
@@ -104,7 +123,8 @@ def w7(X):
     1) np.reshape
     2) You can specify an unknown dimension as -1
     """
-    return None
+    N, M = X.shape
+    return np.reshape(X, (N * M, 1))
 
 
 def w8(N):
@@ -118,7 +138,7 @@ def w8(N):
     Hint: The error "data type not understood" means you probably called
     np.ones or np.zeros with two arguments, instead of a tuple for the shape
     """
-    return None
+    return np.zeros((N, 2*N))
 
 
 def w9(X):
@@ -131,7 +151,7 @@ def w9(X):
 
     Hint: Try boolean array indexing
     """
-    return None
+    return np.where(X > 0.5, True, False)
 
 
 def w10(N):
@@ -144,7 +164,7 @@ def w10(N):
 
     Hint: np.arange
     """
-    return None
+    return np.arange(N)
 
 
 def w11(A, v):
@@ -156,7 +176,7 @@ def w11(A, v):
     Returns:
     Numpy array of shape (N, 1) giving the matrix-vector product Av
     """
-    return None
+    return A @ v
 
 
 def w12(A, v):
@@ -169,7 +189,7 @@ def w12(A, v):
     Numpy array of shape (N, 1) giving the matrix-vector product of the inverse
     of A and v: A^-1 v
     """
-    return None
+    return np.linalg.inv(A) @ v
 
 
 def w13(u, v):
@@ -183,7 +203,7 @@ def w13(u, v):
 
     Hint: .T
     """
-    return None
+    return u.T @ v
 
 
 def w14(v):
@@ -195,7 +215,7 @@ def w14(v):
     The L2 norm of v: norm = (sum_i^N v[i]^2)^(1/2)
     You MAY NOT use np.linalg.norm
     """
-    return None
+    return np.sqrt(np.sum(v**2))
 
 
 def w15(X, i):
@@ -207,7 +227,7 @@ def w15(X, i):
     Returns:
     Numpy array of shape (M,) giving the ith row of X
     """
-    return None
+    return X[i,:]
 
 
 def w16(X):
@@ -220,7 +240,7 @@ def w16(X):
 
     Hint: np.sum
     """
-    return None
+    return np.sum(X)
 
 
 def w17(X):
@@ -233,7 +253,7 @@ def w17(X):
 
     Hint: np.sum has an optional "axis" argument
     """
-    return None
+    return np.sum(X, axis=1)
 
 
 def w18(X):
@@ -246,7 +266,7 @@ def w18(X):
 
     Hint: Same as above
     """
-    return None
+    return np.sum(X, axis=0)
 
 
 def w19(X):
@@ -259,7 +279,7 @@ def w19(X):
 
     Hint: np.sum has an optional "keepdims" argument
     """
-    return None
+    return np.sum(X, axis=1, keepdims=True)
 
 
 def w20(X):
@@ -270,4 +290,4 @@ def w20(X):
     Returns:
     A numpy array S of shape (N, 1) where S[i] is the L2 norm of row i of X
     """
-    return None
+    return np.sqrt(np.sum(X**2, axis=1, keepdims=True))

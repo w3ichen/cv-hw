@@ -1,3 +1,7 @@
+"""
+python run.py --alltests
+"""
+
 import numpy as np
 
 
@@ -14,7 +18,7 @@ def t1(L):
 
     Hint: vstack/hstack/dstack, no for loop
     """
-    return None
+    return np.vstack(L)
 
 
 def t2(X):
@@ -34,7 +38,8 @@ def t2(X):
     2) np.argmin
     3) Watch rows and columns!
     """
-    return None
+    eigenvalues, eigenvectors = np.linalg.eig(X)
+    return eigenvectors[:, np.argmin(eigenvalues)]
 
 
 def t3(X):
@@ -54,7 +59,7 @@ def t3(X):
     2) X[S] = v assigns the value v to all entires of X corresponding to
        true values of S.
     """
-    return None
+    return np.where(X < 0, 0, X)
 
 
 def t4(R, X):
@@ -74,7 +79,7 @@ def t4(R, X):
        by the matrix R.
     2) .T gives the transpose of a matrix
     """
-    return None
+    return (R @ X.T).T
 
 
 def t5(X):
@@ -94,7 +99,7 @@ def t5(X):
        from rows y0 to (but not including!) y1
        from columns x0 (but not including!) x1
     """
-    return None
+    return X[0:4, 0:4] - X[-4:, -4:]
 
 
 def t6(N):
@@ -109,7 +114,9 @@ def t6(N):
     Par: 6 lines
     Instructor: 3 lines
     """
-    return None
+    X = np.ones((N, N))
+    X[:5, :] = X[-5:, :] = X[:, :5] = X[:, -5:] = 0
+    return X
 
 
 def t7(X):
@@ -133,7 +140,7 @@ def t7(X):
     4) Elementwise operations between an array of shape (N, M) and an array of
        shape (N,) won't work -- try reshaping
     """
-    return None
+    return X / np.linalg.norm(X, axis=1, keepdims=True)
 
 
 def t8(X):
@@ -153,7 +160,7 @@ def t8(X):
     2) Normalize the rows individually
     3) You may have to reshape
     """
-    return None
+    return (X - np.mean(X, axis=1, keepdims=True)) / np.std(X, axis=1, keepdims=True)
 
 
 def t9(q, k, v):
@@ -175,7 +182,7 @@ def t9(q, k, v):
     2) Recall that np.sum has useful "axis" and "keepdims" options
     3) np.exp and friends apply elementwise to arrays
     """
-    return None
+    return np.sum(np.exp(-np.linalg.norm(q - k, axis=1)**2) @ v)
 
 
 def t10(Xs):
@@ -199,7 +206,15 @@ def t10(Xs):
     5) Our 3-line solution uses no loops, and uses the algebraic trick from the
        next problem.
     """
-    return None
+    L = len(Xs)
+    R = np.zeros((L, L))
+    M = Xs[0].shape[1]
+    C = [np.mean(Xs[i], axis=0) for i in range(L)] # mean = centroid
+
+    for i in range(L):
+        for j in range(L):
+            R[i, j] = np.linalg.norm(C[i] - C[j])
+    return R
 
 
 def t11(X):
@@ -224,7 +239,12 @@ def t11(X):
        causing the square root to crash. Just take max(0, value) before the
        square root. Seems to occur on Macs.
     """
-    return None
+    N = X.shape[0]
+    D = np.zeros((N, N))
+    for i in range(N):
+        for j in range(N):
+            D[i, j] = np.linalg.norm(X[i] - X[j])
+    return D
 
 
 def t12(X, Y):
@@ -243,7 +263,13 @@ def t12(X, Y):
 
     Hints: Similar to previous problem
     """
-    return None
+    N = X.shape[0]
+    M = Y.shape[0]
+    D = np.zeros((N, M))
+    for i in range(N):
+        for j in range(M):
+            D[i, j] = np.linalg.norm(X[i] - Y[j])
+    return D
 
 
 def t13(q, V):
@@ -260,7 +286,7 @@ def t13(q, V):
 
     Hint: np.argmax
     """
-    return None
+    return np.argmax(np.dot(q, V.T))
 
 
 def t14(X, y):
@@ -277,7 +303,7 @@ def t14(X, y):
 
     Hint: np.linalg.lstsq or np.linalg.solve
     """
-    return None
+    return np.linalg.lstsq(X, y, rcond=None)[0]
 
 
 def t15(X, Y):
@@ -295,7 +321,7 @@ def t15(X, Y):
 
     Hint: np.cross
     """
-    return None
+    return np.cross(X, Y)
 
 
 def t16(X):
@@ -315,7 +341,7 @@ def t16(X):
     1) If it doesn't broadcast, reshape or np.expand_dims
     2) X[:, -1] gives the last column of X
     """
-    return None
+    return X[:, :-1] / X[:, -1].reshape((X.shape[0], 1))
 
 
 def t17(X):
@@ -333,7 +359,7 @@ def t17(X):
 
     Hint: np.hstack, np.ones
     """
-    return None
+    return np.hstack((X, np.ones((X.shape[0], 1))))
 
 
 def t18(N, r, x, y):
@@ -357,7 +383,12 @@ def t18(N, r, x, y):
     it without them, but np.meshgrid and np.arange are easier to understand. 
     2) Arrays have an astype method
     """
-    return None
+    # Create coordinate grid with meshgrid
+    coords = np.arange(N)
+    J, I = np.meshgrid(coords, coords)
+    
+    distances = np.sqrt((J - x)**2 + (I - y)**2)
+    return (distances < r).astype(float)
 
 
 def t19(N, s, x, y):
@@ -375,7 +406,9 @@ def t19(N, s, x, y):
     Par: 3 lines
     Instructor: 2 lines
     """
-    return None
+    J, I = np.meshgrid(np.arange(N), np.arange(N))
+    distances = np.sqrt((J - x)**2 + (I - y)**2)
+    return np.exp(-distances**2 / s**2)
 
 
 def t20(N, v):
@@ -397,4 +430,6 @@ def t20(N, v):
        (The sign of the numerator tells which side the point is on)
     2) np.abs
     """
-    return None
+    J, I = np.meshgrid(np.arange(N), np.arange(N))
+    a, b, c = v
+    return np.abs(a*I + b*J + c) / np.sqrt(a**2 + b**2)

@@ -1,3 +1,7 @@
+"""
+python run.py --allwarmups
+"""
+
 import numpy as np
 
 

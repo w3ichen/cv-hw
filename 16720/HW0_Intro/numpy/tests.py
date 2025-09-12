@@ -207,15 +207,17 @@ def t10(Xs):
        next problem.
     """
     L = len(Xs)
-    R = np.zeros((L, L))
-    M = Xs[0].shape[1]
-    C = [np.mean(Xs[i], axis=0) for i in range(L)] # mean = centroid
+    C = np.array([np.mean(Xs[i], axis=0) for i in range(L)]) # mean = centroid
 
-    for i in range(L):
-        for j in range(L):
-            R[i, j] = np.linalg.norm(C[i] - C[j])
-    return R
+    # R = np.zeros((L, L))
+    # for i in range(L):
+    #     for j in range(L):
+    #         R[i, j] = np.linalg.norm(C[i] - C[j])
+    # return R
 
+    # Using the trick ||x - y||^2 = ||x||^2 + ||y||^2 - 2x^T y
+    distances_squared = np.sum(C**2, axis=1, keepdims=True) + np.sum(C**2, axis=1) - 2*C@C.T
+    return np.sqrt(np.abs(distances_squared)) # Ensure non-negative
 
 def t11(X):
     """
@@ -239,12 +241,16 @@ def t11(X):
        causing the square root to crash. Just take max(0, value) before the
        square root. Seems to occur on Macs.
     """
-    N = X.shape[0]
-    D = np.zeros((N, N))
-    for i in range(N):
-        for j in range(N):
-            D[i, j] = np.linalg.norm(X[i] - X[j])
-    return D
+    # N = X.shape[0]
+    # D = np.zeros((N, N))
+    # for i in range(N):
+    #     for j in range(N):
+    #         D[i, j] = np.linalg.norm(X[i] - X[j])
+    # return D
+
+    # Using the trick ||x - y||^2 = ||x||^2 + ||y||^2 - 2x^T y
+    distances_squared = np.sum(X**2, axis=1, keepdims=True) + np.sum(X**2, axis=1) - 2*X@X.T
+    return np.sqrt(np.abs(distances_squared)) # Ensure non-negative
 
 
 def t12(X, Y):
@@ -263,13 +269,17 @@ def t12(X, Y):
 
     Hints: Similar to previous problem
     """
-    N = X.shape[0]
-    M = Y.shape[0]
-    D = np.zeros((N, M))
-    for i in range(N):
-        for j in range(M):
-            D[i, j] = np.linalg.norm(X[i] - Y[j])
-    return D
+    # N = X.shape[0]
+    # M = Y.shape[0]
+    # D = np.zeros((N, M))
+    # for i in range(N):
+    #     for j in range(M):
+    #         D[i, j] = np.linalg.norm(X[i] - Y[j])
+    # return D
+
+    # Using the trick ||x - y||^2 = ||x||^2 + ||y||^2 - 2x^T y
+    distances_squared = np.sum(X**2, axis=1, keepdims=True) + np.sum(Y**2, axis=1) - 2*X@Y.T
+    return np.sqrt(np.abs(distances_squared)) # Ensure non-negative
 
 
 def t13(q, V):

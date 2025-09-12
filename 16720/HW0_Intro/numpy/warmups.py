@@ -15,11 +15,13 @@ def w1(X):
 
     Hint: Trust that numpy will do the right thing
     """
-    x_range, y_range = X.shape
-    for i in range(x_range):
-        for j in range(y_range):
-            X[i, j] = X[i, j] * 10 + 100
-    return X
+    # x_range, y_range = X.shape
+    # for i in range(x_range):
+    #     for j in range(y_range):
+    #         X[i, j] = X[i, j] * 10 + 100
+    # return X
+
+    return X * 10 + 100
 
 
 def w2(X, Y):
@@ -33,12 +35,13 @@ def w2(X, Y):
 
     Hint: Trust that numpy will do the right thing
     """
-    N = X.shape[0]
-    for i in range(N):
-        for j in range(N):
-            X[i, j] = X[i, j] + 10 * Y[i, j]
-    return X
+    # N = X.shape[0]
+    # for i in range(N):
+    #     for j in range(N):
+    #         X[i, j] = X[i, j] + 10 * Y[i, j]
+    # return X
 
+    return X + 10 * Y
 
 def w3(X, Y):
     """
@@ -51,11 +54,13 @@ def w3(X, Y):
 
     Hint: By analogy to +, * will do the same thing
     """
-    N = X.shape[0]
-    for i in range(N):
-        for j in range(N):
-            X[i, j] = X[i, j] * Y[i, j] - 10
-    return X
+    # N = X.shape[0]
+    # for i in range(N):
+    #     for j in range(N):
+    #         X[i, j] = X[i, j] * Y[i, j] - 10
+    # return X
+
+    return X * Y - 10
 
 
 def w4(X, Y):
@@ -107,11 +112,13 @@ def w6(X, Y):
     A numpy array Z such that Z[i] = float(X[i]) / float(Y[i])
 
     """
-    N = X.shape[0]
-    Z = np.zeros((N, 1))
-    for i in range(N):
-        Z[i] = float(X[i]) / float(Y[i])
-    return Z
+    # N = X.shape[0]
+    # Z = np.zeros((N, 1))
+    # for i in range(N):
+    #     Z[i] = float(X[i]) / float(Y[i])
+    # return Z
+
+    return X / Y
 
 
 def w7(X):

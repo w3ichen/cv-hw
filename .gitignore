@@ -1,7 +1,8 @@
 .DS_Store
 16720/HW1_HOG/imagenette/
 16720/HW1_HOG/imagenette.zip
-
+*.zip
+16720/HW3_Homographies/hw3_data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

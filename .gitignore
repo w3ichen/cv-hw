@@ -3,6 +3,7 @@
 16720/HW1_HOG/imagenette.zip
 *.zip
 16720/HW3_Homographies/hw3_data/
+*.pkl
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
